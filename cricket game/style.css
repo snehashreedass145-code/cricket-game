@@ -1,0 +1,222 @@
+/* css/style.css
+   Clean, responsive styling and animations for Mini Cricket
+*/
+
+/* Reset-ish */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body,#root { height: 100%; }
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#0f1724 0%, #071126 100%);
+  color: #e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* App layout */
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Header */
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.title {
+  font-size: 1.6rem;
+  letter-spacing:1px;
+  margin-right: auto;
+}
+.controls { display:flex; gap:10px; align-items:center; }
+.btn {
+  background: linear-gradient(180deg,#1b6cff,#1457d6);
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight:600;
+  box-shadow: 0 6px 14px rgba(10,40,120,0.25);
+}
+.btn:active { transform: translateY(1px); }
+
+/* Main area with pitch + scoreboard */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+}
+
+/* Pitch */
+.pitch {
+  background: linear-gradient(180deg,#0b2b16 0%, #0b401c 100%);
+  border-radius: 14px;
+  padding: 18px;
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* Center strip & crease */
+.pitch::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 100%;
+  background: linear-gradient(#6b8c63 0%, #5a7f58 100%);
+  border-radius: 12px;
+  opacity: 0.8;
+  top: 30px;
+}
+.pitch::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  top: calc(50% - 3px);
+}
+
+/* Ball */
+.ball {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, #fffcf0 10%, #ff6b6b 70%);
+  position: absolute;
+  left: calc(50% - 13px);
+  top: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  transform: translateY(0);
+  transition: transform 0.6s cubic-bezier(.2,.9,.2,1), left 0.5s ease;
+  z-index: 30;
+}
+
+/* Bat */
+.bat {
+  width: 110px;
+  height: 22px;
+  position: absolute;
+  left: calc(50% - 55px);
+  bottom: 40px;
+  transform-origin: 10% 50%;
+  border-radius: 6px;
+  background: linear-gradient(90deg,#d1a66a,#b16b2e);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.45);
+  z-index: 20;
+  transition: transform 0.12s ease;
+}
+
+/* Wicket */
+.wicket {
+  position: absolute;
+  left: calc(50% - 34px);
+  bottom: 30px;
+  width: 68px;
+  height: 62px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  z-index: 10;
+}
+.stump {
+  width:8px;
+  height: 56px;
+  background: linear-gradient(#f1e9dc,#c89d6a);
+  border-radius: 3px;
+  transform-origin: center bottom;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Overlay messages */
+.overlay {
+  position:absolute;
+  left:0; right:0; top:0; bottom:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.overlay .msg {
+  background: rgba(2,6,23,0.65);
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight:700;
+  letter-spacing:0.6px;
+}
+
+/* Right column */
+.right {
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.scorecard {
+  background: linear-gradient(180deg,#07102a 0%, #08203a 100%);
+  padding: 12px;
+  border-radius: 10px;
+  min-height: 160px;
+}
+.score-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+.muted { color: #9fb4d1; font-size: 0.9rem; }
+
+/* Log */
+.log {
+  background: linear-gradient(180deg,#071023, #041220);
+  padding: 12px;
+  border-radius: 10px;
+  min-height: 160px;
+  overflow:auto;
+}
+.log ul { list-style:none; max-height:260px; overflow:auto; padding-right:8px;}
+.log li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  border-bottom: 1px dashed rgba(255,255,255,0.03);
+}
+
+/* Actions area */
+.actions {
+  margin-top: 14px;
+}
+.action-row { display:flex; align-items:center; gap:10px; }
+.controls-row { display:flex; align-items:center; gap:8px; }
+.controls-row input[type="range"] { width: 100px; }
+.hidden { display: none; }
+
+/* Small screens */
+@media (max-width: 860px) {
+  .main { grid-template-columns: 1fr; }
+  .right { order: 2; }
+  .left { order: 1; }
+  .pitch { height: 340px; }
+}
+
+/* Animations for bat swing and wicket fall */
+.bat.swing {
+  transform: rotate(-25deg) translateY(-6px);
+  transition: transform 0.12s cubic-bezier(.2,.9,.2,1);
+}
+.wicket.fall .stump {
+  transform: rotate(55deg) translateY(6px);
+  opacity: 0.75;
+}
